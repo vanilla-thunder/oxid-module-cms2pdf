@@ -1,0 +1,43 @@
+{
+  "name": "cms2pdf",
+  "version": "1.3.0",
+  "description": "Dieses Modul ermöglicht die Bereitstellung von CMS Seiten wie AGB oder Widerrufsrecht als PDF Dateien.",
+  "author": "Marat Bedoev",
+  "email": "oxid@bestlife.ag",
+  "vendor": "bla",
+  "company": "bestlife AG",
+  "url": "https://github.com/vanilla-thunder/oxid-module-cms2pdf",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanilla-thunder/oxid-module-cms2pdf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vanilla-thunder/oxid-module-cms2pdf/issues"
+  },
+  "keywords": [
+    "pdf",
+    "oxid"
+  ],
+  "dependencies": {
+    "fs-extra": "*",
+    "replace": "*"
+  },
+  "scripts": {
+    "init": "node scripts.js init",
+    "build": "node scripts.js build",
+    "publish": "node scripts.js publish",
+    "push": "node scripts.js publish"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
+    "rules": {
+    }
+  }
+}

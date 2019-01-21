@@ -1,11 +1,6 @@
 /*jshint ignore:start  */
 //"use strict"
 const oxmodule = require('./package.json'),
-    AdmZip = require('adm-zip'),
-    cheerio = require('cheerio'),
-    fs = require('fs-extra'),
-    replace = require('replace'),
-    request = require('request'),
     runner = require('child_process'),
     mode = process.argv[2],
     gitcb = (err, stdout, stderr) => {
@@ -23,9 +18,9 @@ let error = function (err) {
 
 if (typeof mode === "undefined") process.exit(-1);
 else if (mode === "init") {
+    runner.execSync("npm install --production");
     runner.execSync("git clone -b master " + oxmodule.repository.url.replace("https://github.com/", "git@github.com:") + " _master --depth 1");
     runner.execSync("git clone -b module " + oxmodule.repository.url.replace("https://github.com/", "git@github.com:") + " _module --depth 1");
-    runner.execSync("npm install --production");
     console.log("done!");
     console.log("");
 }
@@ -35,7 +30,10 @@ else if (mode === "update") {
 
 }
 else if (mode === "build") {
-
+    
+    var fs = require('fs-extra'),
+        replace = require('replace');
+        
     // cleanup
     console.log("removing old files...");
     fs.moveSync('_module', '__module');

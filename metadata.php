@@ -19,7 +19,7 @@ $aModule = [
 	'title'       => '<strong style="color:#95b900;font-size:125%;">best</strong><strong style="color:#c4ca77;font-size:125%;">life</strong> <strong>CMS to PDF</strong>',
 	'description' => 'Dieses Modul ermöglicht die Bereitstellung von CMS Seiten wie AGB oder Widerrufsrecht als PDF Dateien.',
 	'thumbnail'   => 'tinymce.png',
-	'version'     => '1.3.0 ( 2019-01-21 )',
+	'version'     => '1.3.0 ( 2019-01-22 )',
 	'author'      => 'Marat Bedoev, bestlife AG',
 	'email'       => 'oxid@bestlife.ag',
 	'url'         => 'https://github.com/vanilla-thunder/oxid-module-cms2pdf',

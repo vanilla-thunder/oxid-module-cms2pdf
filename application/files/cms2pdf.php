@@ -135,33 +135,31 @@ class cms2pdf extends oxSuperCfg
 		//$oUtilsView = oxRegistry::get("oxUtilsView");
 		//$content = $oUtilsView->parseThroughSmarty($cms->oxcontents__oxcontent->value, $cms->getId(), null, true);
 
-		if ($log) oxRegistry::getUtils()->writeToLog("fetching content from  {$link}?plain=1\n","cms2pdf.log");
+		// fetch
 		$content = file_get_contents($link . "?plain=1");
+		if ($log) oxRegistry::getUtils()->writeToLog("fetching content from {$link}?plain=1\n\t".$cms->oxcontents__oxloadid->value."_".$sLang."_original.html\n","cms2pdf.log");
+		if ($log) oxRegistry::getUtils()->writeToLog($content,"cms2pdf/".$cms->oxcontents__oxloadid->value."_".$sLang."_original.html");
 
-
-		if ($log)
-		{
-			oxRegistry::getUtils()->writeToLog("removing script tags from fetched content\n\tbefore: ".$cms->oxcontents__oxloadid->value."_".$sLang."_js.html\n\tafter: ".$cms->oxcontents__oxloadid->value."_".$sLang."_nojs.html\n","cms2pdf.log");
-			oxRegistry::getUtils()->writeToLog($content,$cms->oxcontents__oxloadid->value."_".$sLang."_js.html");
-		}
+		// clean up
 		$content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $content);
-		if ($log) oxRegistry::getUtils()->writeToLog($content,$cms->oxcontents__oxloadid->value."_".$sLang."_nojs.html");
-		//oxRegistry::getUtils()->writeToLog($header.$content,$cms->oxcontents__oxloadid->value."_before.html");
+		$content = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', "", $content);
+		$content = preg_replace('/<link\b[^>]*>(.*?)(<\/link>)?/is', "", $content);
+		if ($log) oxRegistry::getUtils()->writeToLog("removing script and style tags from fetched content\n\t".$cms->oxcontents__oxloadid->value."_".$sLang."_clean.html\n","cms2pdf.log");
+		if ($log) oxRegistry::getUtils()->writeToLog($content,"cms2pdf/".$cms->oxcontents__oxloadid->value."_".$sLang."_clean.html");
 
 		$html = $header.$content;
 
 		// tidy html code
 		if(function_exists("tidy_parse_string"))
 		{
-			if ($log) oxRegistry::getUtils()->writeToLog("cleaning up HTML with tidy\n\tbefore: ".$cms->oxcontents__oxloadid->value."_".$sLang."_original.html\n\tafter: ".$cms->oxcontents__oxloadid->value."_".$sLang."_tidy.html\n","cms2pdf.log");
-			if ($log) oxRegistry::getUtils()->writeToLog($html,$cms->oxcontents__oxloadid->value."_".$sLang."_original.html");
 			/** @var tidy $html */
 			$html = tidy_parse_string($header . $content, [
 				'show-body-only' => true,
 				'wrap'           => 0
 			], 'UTF8');
 			$html->cleanRepair();
-			if ($log) oxRegistry::getUtils()->writeToLog($html,$cms->oxcontents__oxloadid->value."_".$sLang."_tidy.html");
+			if ($log) oxRegistry::getUtils()->writeToLog("cleaning up HTML with tidy\n\t".$cms->oxcontents__oxloadid->value."_".$sLang."_tidy.html\n","cms2pdf.log");
+			if ($log) oxRegistry::getUtils()->writeToLog($html,"cms2pdf/".$cms->oxcontents__oxloadid->value."_".$sLang."_tidy.html");
 		}
 
 

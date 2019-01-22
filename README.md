@@ -1,5 +1,5 @@
 ## [bla] cms2pdf - Dieses Modul ermöglicht die Bereitstellung von CMS Seiten wie AGB oder Widerrufsrecht als PDF Dateien.
-version 1.3.0 ( 2019-01-21 )
+version 1.3.0 ( 2019-01-22 )
 
 
 
